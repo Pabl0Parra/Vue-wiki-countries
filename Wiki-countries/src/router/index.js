@@ -1,16 +1,18 @@
 // src/router.js
 import { createRouter, createWebHistory } from "vue-router";
+import CountryDetails from "../components/CountryDetails.vue";
+import CountriesList from "../components/CountriesList.vue";
 
 const routes = [
   {
     path: "/",
-    name: "list",
-    component: () => import("../components/CountriesList.vue"),
+    name: "Countries List",
+    component: CountriesList,
     children: [
       {
         path: "/list/:alpha3Code",
-        name: "list",
-        component: () => import("../components/CountryDetails.vue"),
+        name: "Country Details",
+        component: CountryDetails,
       },
     ],
   },

@@ -1,6 +1,6 @@
 <template>
   <Spinner />
-  <h1>Country List</h1>
+  <h1 class="d-flex flex-row justify-content-center">Country List</h1>
   <!-- wrapper div de bootstrap -->
   <div class="container">
     <!-- row wrapper div de bootstrap -->
@@ -11,16 +11,20 @@
             v-for="(country, index) in countries"
             :key="index"
             :to="`/list/${country.alpha3Code}`"
-            class="list-group-item list-group-item-action d-flex flex-column justify-content-center"
+            class="list-group-item list-group-item-action d-flex flex-column justify-content-center align-items-center"
           >
             <img
-              class="flag"
+              class="flag mb-2 mt-3"
               :src="`https://flagpedia.net/data/flags/icon/72x54/${country.alpha2Code.toLowerCase()}.png`"
               alt=""
             />
-            <p>
+            <p class="fw-bold">
               {{ country.name.common }}
             </p>
+            <!-- pointing to the alphacode -->
+            <!-- <p class="fw-italic">
+              {{ country.alpha2Code }}
+            </p> -->
           </router-link>
         </div>
       </div>
@@ -57,5 +61,8 @@ fetchCountries();
 .flag {
   width: 100px;
   height: 80px;
+}
+.list {
+  margin-left: 16.5%;
 }
 </style>

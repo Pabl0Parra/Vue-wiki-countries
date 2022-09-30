@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 ms-3">
+  <div class="p-4 ms-3 d-flex flex-column">
     <img
       class="flag pb-4"
       :src="`https://flagpedia.net/data/flags/icon/72x54/${country.alpha2Code.toLowerCase()}.png`"

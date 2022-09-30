@@ -1,33 +1,35 @@
 <template>
-  <img
-    class="flag"
-    :src="`https://flagpedia.net/data/flags/icon/72x54/${alpha2Code.toLowerCase()}.png`"
-    alt=""
-  />
-  <h1>{{ name }}</h1>
-  <table>
-    <thead></thead>
-    <tbody>
-      <tr class="d-flex flex-column">
-        <td class="fw-bold">Capital:</td>
-        <td>{{ capital }}</td>
-      </tr>
-      <tr class="d-flex flex-column">
-        <td class="fw-bold">Area:</td>
-        <td>{{ area }}</td>
-      </tr>
-      <tr class="d-flex flex-column">
-        <td class="fw-bold">Borders:</td>
-        <td>
-          <ul>
-            <li v-for="(border, index) in borders" :key="index">
-              {{ border }}
-            </li>
-          </ul>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="p-4 ms-3">
+    <img
+      class="flag pb-4"
+      :src="`https://flagpedia.net/data/flags/icon/72x54/${alpha2Code.toLowerCase()}.png`"
+      alt=""
+    />
+    <h1>{{ name }}</h1>
+    <table>
+      <thead></thead>
+      <tbody>
+        <tr class="d-flex flex-column">
+          <td class="fw-bold">Capital:</td>
+          <td>{{ capital }}</td>
+        </tr>
+        <tr class="d-flex flex-column">
+          <td class="fw-bold">Area:</td>
+          <td>{{ area }} kms<sup>2</sup></td>
+        </tr>
+        <tr class="d-flex flex-column">
+          <td class="fw-bold">Borders:</td>
+          <td>
+            <ul>
+              <li v-for="(border, index) in borders" :key="index">
+                {{ border }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>

@@ -150,7 +150,7 @@ const getCountryByAlphaCode = async () => {
 
   countryInfo.value = finalResponse;
 
-  return { name, capital, borders, area, alpha2Code, countryInfo };
+  return { countryInfo };
 };
 
 //onMounted Hook - so that getCountryByAlphaCode gets call when a country is clicked (basically, so that we already have the info from the API before the component is mounted)

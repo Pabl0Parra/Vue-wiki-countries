@@ -1,119 +1,68 @@
 <template>
-  <div>
-    <!-- Bootstrap container wrapper div -->
-    <div class="container">
-      <!-- Bootstrap row wrapper div -->
-      <div class="row">
-        <!-- Countries List (Bootstrap column) -->
-        <div class="col-5" style="max-height: 90vh; overflow: scroll">
-          <div class="list-group">
-            <a class="list-group-item list-group-item-action" href="/ABW">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/aw.png" />
-              <p>Aruba</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/AFG">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/af.png" />
-              <p>Afghanistan</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/AGO">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/ao.png" />
-              <p>Angola</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/AIA">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/ai.png" />
-              <p>Anguilla</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ALA">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/ax.png" />
-              <p>Åland Islands</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ALB">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/al.png" />
-              <p>Albania</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/AND">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/ad.png" />
-              <p>Andorra</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ARE">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/ae.png" />
-              <p>United Arab Emirates</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ARG">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/ar.png" />
-              <p>Argentina</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ARM">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/am.png" />
-              <p>Armenia</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ASM">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/as.png" />
-              <p>American Samoa</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ATA">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/aq.png" />
-              <p>Antarctica</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/FLK">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/fk.png" />
-              <p>Falkland Islands</p>
-            </a>
-            <a
-              class="list-group-item list-group-item-action active"
-              href="/FRA"
-            >
-              <img src="https://flagpedia.net/data/flags/icon/72x54/fr.png" />
-              <p>France</p>
-            </a>
-            <a class="list-group-item list-group-item-action" href="/ZWE">
-              <img src="https://flagpedia.net/data/flags/icon/72x54/zw.png" />
-              <p>Zimbabwe</p>
-            </a>
-          </div>
+  <Spinner />
+  <h1>Country List</h1>
+  <!-- wrapper div de bootstrap -->
+  <div class="container">
+    <!-- row wrapper div de bootstrap -->
+    <div class="row">
+      <div class="col-5">
+        <div class="list-group">
+          <router-link
+            v-for="(country, index) in countries"
+            :key="index"
+            :to="`/list/${country.alpha3Code}`"
+            class="list-group-item list-group-item-action d-flex flex-column justify-content-center"
+          >
+            <img
+              class="flag"
+              :src="`https://flagpedia.net/data/flags/icon/72x54/${country.alpha2Code.toLowerCase()}.png`"
+              alt=""
+            />
+            <p>
+              {{ country.name.common }}
+            </p>
+          </router-link>
         </div>
-
-        <!-- Country Details (Bootstrap column) -->
-        <div class="col-7">
-          <img
-            src="https://restcountries.eu/data/fra.svg"
-            alt="country flag"
-            style="width: 300px"
-          />
-          <h1>France</h1>
-          <table class="table">
-            <thead></thead>
-            <tbody>
-              <tr>
-                <td style="width: 30%">Capital</td>
-                <td>Paris</td>
-              </tr>
-              <tr>
-                <td>Area</td>
-                <td>551695 km <sup>2</sup></td>
-              </tr>
-              <tr>
-                <td>Borders</td>
-                <td>
-                  <ul>
-                    <li><a href="/AND">Andorra</a></li>
-                    <li><a href="/BEL">Belgium</a></li>
-                    <li><a href="/DEU">Germany</a></li>
-                    <li><a href="/ITA">Italy</a></li>
-                    <li><a href="/MCO">Monaco</a></li>
-                    <li><a href="/ESP">Spain</a></li>
-                    <li><a href="/CHE">Switzerland</a></li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      </div>
+      <div class="col-7">
+        <router-view />
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script>
+import Spinner from "./Spinner.vue";
+export default {
+  name: "CountriesList",
+  data() {
+    return {
+      //definimos un valor de datos estilo array para recibir la info del api
+      countries: null,
+    };
+  },
+  methods: {
+    async fetchCountries() {
+      const response = await fetch(
+        "https://ih-countries-api.herokuapp.com/countries"
+      );
+      const finalResponse = await response.json();
+      // console.log(finalResponse);//VERIFICAMOS MEDIANTES UNA LLAMADA A CONSOLA QUE RECIBIMOS LOS DATOS
+      this.countries = finalResponse;
+    },
+  },
+  //usamos el created hook para hacer nuestra llamada inicial a nuestra base de datos.
+  //no usamos async en este caso porque la asincronia la maneja la funcion fetchCountries. El hook created() solo se encarga de llamar la funcion fetchCountries
+  created() {
+    this.fetchCountries();
+  },
+  components: { Spinner },
+};
+</script>
 
-<style scoped></style>
+<style>
+.flag {
+  width: 100px;
+  height: 80px;
+}
+</style>

@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import Spinner from "./Spinner.vue";
 const countries = ref(null);
 

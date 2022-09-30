@@ -1,14 +1,16 @@
 <template>
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
+  <div
+    class="d-flex flex-column align-items-center justify-content-center mt-4"
+  >
+    <div class="spinner-border text-primary text-center" role="status"></div>
+    <p>{{ text }}</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Spinner",
-  props: {
-    text: String,
+<script setup>
+defineProps({
+  text: {
+    type: String,
   },
-};
+});
 </script>

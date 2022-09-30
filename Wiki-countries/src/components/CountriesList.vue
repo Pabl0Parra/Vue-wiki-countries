@@ -1,10 +1,9 @@
 <template>
-  <Spinner />
   <h1 class="d-flex flex-row justify-content-center">Country List</h1>
   <!-- wrapper div de bootstrap -->
   <div class="container">
     <!-- row wrapper div de bootstrap -->
-    <div class="row">
+    <div class="row" v-if="countries">
       <div class="col-5">
         <div class="list-group">
           <router-link
@@ -29,8 +28,11 @@
         </div>
       </div>
       <div class="col-7">
-        <RouterView />
+        <CountryDetails />
       </div>
+    </div>
+    <div v-else class="row">
+      <Spinner text="Loading Countries..." />
     </div>
   </div>
 </template>
@@ -38,6 +40,7 @@
 <script setup>
 import { ref } from "vue";
 import Spinner from "./Spinner.vue";
+import CountryDetails from "./CountryDetails.vue";
 const countries = ref(null);
 
 const fetchCountries = async () => {
